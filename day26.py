@@ -1,0 +1,28 @@
+def has_cycle(V,edges):
+    adj=[[] for _ in range(V)]
+    for u,v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    visited=[False]*V
+
+    def dfs(node,parent):
+        visited[node]=True
+        for neigh in adj[node]:
+            if not visited[neigh]:
+                if dfs(neigh,node):
+                    return True
+            elif neigh !=parent:
+                return True
+        return False
+    for i in range(V):
+        if not visited[i]:
+            if dfs(i, -1):
+                return True
+    return False
+
+print(has_cycle(5,[[0,1],[1,2],[2,3],[3,4],[4,0]]))
+print(has_cycle(3,[[0,1],[1,2]]))
+print(has_cycle(4,[[0,1],[1,2],[2,0]]))
+print(has_cycle(5,[]))
+print(has_cycle(3,[[0,1],[0,1]]))
+
